@@ -84,37 +84,29 @@ function determineWinner(computerPlay, userPlay) {
     document.body.addEventListener("click", clearResults);          //REPASAR
 }
 
-function userPlaysStone(event) {
+const handleUserPlay = (userPlay, event) => {
     event.stopPropagation();
     if (played === true) {
         clearResults();
         return;
     }
-    let userPlay = "stone";
-    let compPlay = computerPlay();
+    const compPlay = computerPlay();
     determineWinner(compPlay, userPlay);
+};
+
+function userPlaysStone(event) {
+    const userPlay = "stone";
+    handleUserPlay(userPlay, event);
 }
 
 function userPlaysPaper(event) {
-    event.stopPropagation();                        ///REPASAR
-    if (played === true) {
-        clearResults();
-        return;
-    }
-    let userPlay = "paper";
-    let compPlay = computerPlay();
-    determineWinner(compPlay, userPlay);
+    const userPlay = "paper";
+    handleUserPlay(userPlay, event);
 }
 
 function userPlaysScissors(event) {
-    event.stopPropagation();
-    if (played === true) {
-        clearResults();
-        return;
-    }
-    let userPlay = "scissors";
-    let compPlay = computerPlay();
-    determineWinner(compPlay, userPlay);
+    const userPlay = "scissors";
+    handleUserPlay(userPlay, event);
 }
 
 let stone = document.getElementById("stone");
