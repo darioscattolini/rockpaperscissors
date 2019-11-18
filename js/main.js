@@ -1,4 +1,30 @@
-function computerPlay() {
+//Images to be clicked by the user
+const stone    = document.getElementById("stone");
+const paper    = document.getElementById("paper");
+const scissors = document.getElementById("scissors");
+
+//Functions triggered by clicking the images
+stone.onclick    = function() { play("stone", event) };
+paper.onclick    = function() { play("paper", event) };
+scissors.onclick = function() { play("scissors", event) };
+
+let played = false;        //Flag that signals if there is a game result displayed
+
+const play = (userPlay, event) => {
+    //Determines what happens when user clicks on an image
+
+    event.stopPropagation();
+    if (played === true) {      //In case click to clear results is pressed on image
+        clearResults();
+        return;
+    }
+    played = true;
+    determineWinner(userPlay, computerPlay());
+};
+
+const computerPlay = () => {
+    //Resolves computer's choice
+
     let play = Math.floor(Math.random() * 3);
     switch(play) {
         case 0:
@@ -10,109 +36,62 @@ function computerPlay() {
     }
 }
 
-let played = false;
+const determineWinner = (userPlay, compPlay) => {
+    //Resolves who wins
 
-function clearResults() {
-    document.getElementById("chosestone").innerHTML = "";
-    document.getElementById("chosepaper").innerHTML = "";
+    switch(userPlay + compPlay) {
+        case "scissorsstone":
+        case "paperscissors":
+        case "stonepaper":
+            computerWins(userPlay, compPlay);
+            break;
+        case "stonescissors":
+        case "scissorspaper":
+        case "paperstone":
+            userWins(userPlay, compPlay);
+            break;
+        default:
+            tie(userPlay);
+    }
+
+    document.body.addEventListener("click", clearResults);      //Click to clear results
+}
+
+const computerWins = (userPlay, compPlay) => {
+    //Resolves what happens if computer wins
+
+    document.getElementById("chose" + compPlay).innerHTML = "Computer Wins!";
+    document.getElementById("chose" + userPlay).innerHTML = "You Lose!";
+    document.getElementById(compPlay).classList.add(compPlay + "win");
+    document.getElementById(userPlay).classList.add(userPlay + "lose");
+};
+
+const userWins = (userPlay, compPlay) => {
+    //Resolves what happens if user wins
+
+    document.getElementById("chose" + userPlay).innerHTML = "You Win!";
+    document.getElementById("chose" + compPlay).innerHTML = "Computer Loses!";
+    document.getElementById(userPlay).classList.add(userPlay + "win");
+    document.getElementById(compPlay).classList.add(compPlay + "lose");
+};
+
+const tie = play => {
+    //Resolves what happens if there is a tie
+
+    document.getElementById("chose" + play).innerHTML = "Tie";
+    document.getElementById(play).classList.add(play + "tie");
+}
+
+const clearResults = () => {
+    //Resets the game
+
+    document.getElementById("chosestone").innerHTML    = "";
+    document.getElementById("chosepaper").innerHTML    = "";
     document.getElementById("chosescissors").innerHTML = "";
-    document.getElementById("stone").className = "stone";
-    document.getElementById("paper").className = "paper";
+    
+    document.getElementById("stone").className    = "stone";
+    document.getElementById("paper").className    = "paper";
     document.getElementById("scissors").className = "scissors";    
 
     played = false;
 }
-
-function determineWinner(computerPlay, userPlay) {
-    let youlose = document.createTextNode("You Lose!");
-    let youwin = document.createTextNode("You Win!");
-    let computerlose = document.createTextNode("Computer Loses");
-    let computerwins = document.createTextNode("Computer Wins");
-    let tie = document.createTextNode("Tie");
-
-    if (computerPlay == "stone" && userPlay == "scissors") {
-        document.getElementById("chosescissors").append(youlose);
-        document.getElementById("chosestone").append(computerwins);
-        document.getElementById("stone").classList.add("stonewin");
-        document.getElementById("scissors").classList.add("scissorslose");
-    }
-    if (computerPlay == "scissors" && userPlay == "paper") {
-        document.getElementById("chosepaper").append(youlose);
-        document.getElementById("chosescissors").append(computerwins);
-        document.getElementById("scissors").classList.add("scissorswin");
-        document.getElementById("paper").classList.add("paperlose");
-    }
-    if (computerPlay == "paper" && userPlay == "stone") {
-        document.getElementById("chosestone").append(youlose);
-        document.getElementById("chosepaper").append(computerwins);
-        document.getElementById("paper").classList.add("paperwin");
-        document.getElementById("stone").classList.add("stonelose");
-    }
-    if (userPlay == "stone" && computerPlay == "scissors") {
-        document.getElementById("chosescissors").append(computerlose);
-        document.getElementById("chosestone").append(youwin);
-        document.getElementById("stone").classList.add("stonewin");
-        document.getElementById("scissors").classList.add("scissorslose");
-    }
-    if (userPlay == "scissors" && computerPlay == "paper") {
-        document.getElementById("chosepaper").append(computerlose);
-        document.getElementById("chosescissors").append(youwin);
-        document.getElementById("scissors").classList.add("scissorswin");
-        document.getElementById("paper").classList.add("paperlose");
-    }
-    if (userPlay == "paper" && computerPlay == "stone") {
-        document.getElementById("chosestone").append(computerlose);
-        document.getElementById("chosepaper").append(youwin);
-        document.getElementById("paper").classList.add("paperwin");
-        document.getElementById("stone").classList.add("stonelose");
-    }
-    if (userPlay == "stone" && computerPlay == "stone") {
-        document.getElementById("chosestone").append(tie);
-        document.getElementById("stone").classList.add("stonetie");
-    }
-    if (userPlay == "scissors" && computerPlay == "scissors") {
-        document.getElementById("chosescissors").append(tie);
-        document.getElementById("scissors").classList.add("scissorstie");
-    }
-    if (userPlay == "paper" && computerPlay == "paper") {
-        document.getElementById("chosepaper").append(tie);
-        document.getElementById("paper").classList.add("papertie");
-    }
-
-    played = true;
-
-    document.body.addEventListener("click", clearResults);          //REPASAR
-}
-
-const handleUserPlay = (userPlay, event) => {
-    event.stopPropagation();
-    if (played === true) {
-        clearResults();
-        return;
-    }
-    const compPlay = computerPlay();
-    determineWinner(compPlay, userPlay);
-};
-
-function userPlaysStone(event) {
-    const userPlay = "stone";
-    handleUserPlay(userPlay, event);
-}
-
-function userPlaysPaper(event) {
-    const userPlay = "paper";
-    handleUserPlay(userPlay, event);
-}
-
-function userPlaysScissors(event) {
-    const userPlay = "scissors";
-    handleUserPlay(userPlay, event);
-}
-
-let stone = document.getElementById("stone");
-let paper = document.getElementById("paper");
-let scissors = document.getElementById("scissors");
-
-stone.onclick = userPlaysStone;
-paper.onclick = userPlaysPaper;
-scissors.onclick = userPlaysScissors;
