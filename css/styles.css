@@ -1,0 +1,183 @@
+/*! HTML5 Boilerplate v7.2.0 | MIT License | https://html5boilerplate.com/ */
+
+/* main.css 2.0.0 | MIT License | https://github.com/h5bp/main.css#readme */
+/*
+ * What follows is the result of much research on cross-browser styling.
+ * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
+ * Kroc Camen, and the H5BP dev community and team.
+ */
+
+/* ==========================================================================
+   Base styles: opinionated defaults
+   ========================================================================== */
+
+html {
+  color: #222;
+  font-size: 1em;
+  line-height: 1.4;
+}
+
+/*
+ * Remove text-shadow in selection highlight:
+ * https://twitter.com/miketaylr/status/12228805301
+ *
+ * Vendor-prefixed and regular ::selection selectors cannot be combined:
+ * https://stackoverflow.com/a/16982510/7133471
+ *
+ * Customize the background color to match your design.
+ */
+
+::-moz-selection {
+  background: #b3d4fc;
+  text-shadow: none;
+}
+
+::selection {
+  background: #b3d4fc;
+  text-shadow: none;
+}
+
+/*
+ * A better looking default horizontal rule
+ */
+
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0;
+}
+
+/*
+ * Remove the gap between audio, canvas, iframes,
+ * images, videos and the bottom of their containers:
+ * https://github.com/h5bp/html5-boilerplate/issues/440
+ */
+
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+  vertical-align: middle;
+}
+
+/*
+ * Remove default fieldset styles.
+ */
+
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+/*
+ * Allow only vertical resizing of textareas.
+ */
+
+textarea {
+  resize: vertical;
+}
+
+/* ==========================================================================
+   Browser Upgrade Prompt
+   ========================================================================== */
+
+.browserupgrade {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+}
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+body {
+  background-color: #b3d4fc;
+  font-family: 'Lilita One';
+}
+
+h1 {
+  font-size: 4.5vw;
+  text-align: center;
+  letter-spacing: 0.4vw;
+}
+
+.gameboard, .result {
+  width: 70vw;
+  margin: auto;
+  display: flex;
+}
+
+.result {
+  height: 3vw;
+}
+
+.stone {
+  background: url("../img/stone.png") no-repeat;
+  width: 33%;
+  height: 0;
+  padding-bottom: 33%;
+}
+.stone:hover {
+  background: url("../img/stoneonhover.png") no-repeat;
+}
+.stonewin, .stonewin:hover {
+  background: url("../img/stonewin.png") no-repeat;
+}
+.stonelose, .stonelose:hover {
+  background: url("../img/stonelose.png") no-repeat;
+}
+.stonetie, .stonetie:hover {
+  background: url("../img/stonetie.png") no-repeat;
+}
+
+.paper {
+  background: url("../img/paper.png") no-repeat;
+  width: 33%;
+  height: 0;
+  padding-bottom: 33%;
+}
+.paper:hover {
+  background: url("../img/paperonhover.png") no-repeat;
+}
+.paperwin, .paperwin:hover {
+  background: url("../img/paperwin.png") no-repeat;
+}
+.paperlose, .paperlose:hover {
+  background: url("../img/paperlose.png") no-repeat;
+}
+.papertie, .papertie:hover {
+  background: url("../img/papertie.png") no-repeat;
+}
+
+.scissors {
+  background: url("../img/scissors.png") no-repeat;
+  width: 33%;
+  height: 0;
+  padding-bottom: 33%;
+}
+.scissors:hover {
+  background: url("../img/scissorsonhover.png") no-repeat;
+}
+.scissorswin, .scissorswin:hover {
+  background: url("../img/scissorswin.png") no-repeat;
+}
+.scissorslose, .scissorslose:hover {
+  background: url("../img/scissorslose.png") no-repeat;
+}
+.scissorstie, .scissorstie:hover {
+  background: url("../img/scissorstie.png") no-repeat;
+}
+
+#chosestone, #chosepaper, #chosescissors {
+  width: 33%;
+  text-align: center;
+  font-size: 3vw;
+}
