@@ -103,7 +103,7 @@ h1 {
   font-size: 3vw;
 }
 
-@media screen and (min-width: 300px) and (max-width: 767px) and (orientation: portrait) {
+@media screen and (min-device-width: 300px) and (max-device-width: 767px) and (orientation: portrait) {
   html {
     transform: rotate(-90deg);
     transform-origin: left top;
