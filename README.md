@@ -36,5 +36,5 @@ I found the idea for this project in [The Odin Project](https://www.theodinproje
 ## Contact
 Created by [Darío Scattolini](https://github.com/darioscattolini). Feel free to contact me!
 
-## Licence
+## License
 [Copyright 2019 Darío Scattolini - MIT License](./LICENSE.txt])
