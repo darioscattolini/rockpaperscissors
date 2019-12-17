@@ -1,29 +1,34 @@
-//Images to be clicked by the user
-const stone    = document.getElementById("stone");
-const paper    = document.getElementById("paper");
-const scissors = document.getElementById("scissors");
+/* Flag that signals if there is a game result displayed. */
+let played = false;
 
-//Functions triggered by clicking the images
-stone.onclick    = function() { play("stone", event) };
-paper.onclick    = function() { play("paper", event) };
-scissors.onclick = function() { play("scissors", event) };
+/* Assignment of functions to clickable interface. */
+document.getElementById("stone").onclick    = () => play("stone", event);
+document.getElementById("paper").onclick    = () => play("paper", event);
+document.getElementById("scissors").onclick = () => play("scissors", event);
 
-let played = false;        //Flag that signals if there is a game result displayed
-
+/* Manages a whole game.
+ * userPlay - string signaling user's choice
+ * event    - user's click event passed as argument for event handling */
 const play = (userPlay, event) => {
-    //Determines what happens when user clicks on an image
 
-    event.stopPropagation();
-    if (played === true) {      //In case click to clear results is pressed on image
+        //Stops event from bubbling to body event handler (line 66)
+    event.stopPropagation();    
+
+        //In case a previous game needs to be cleared
+    if (played === true) {      
         clearResults();
         return;
     }
-    played = true;
+
     determineWinner(userPlay, computerPlay());
+
+    played = true;
+
 };
 
+/* Resolves computer's choice.
+ * returns string signalling computer's choice. */
 const computerPlay = () => {
-    //Resolves computer's choice
 
     let play = Math.floor(Math.random() * 3);
     switch(play) {
@@ -34,10 +39,13 @@ const computerPlay = () => {
         case 2:
             return "scissors";
     }
+
 }
 
+/* Resolves who wins and triggers function to display result.
+ * userPlay - string signaling user's choice
+ * compPlay - string signaling computer's choice */
 const determineWinner = (userPlay, compPlay) => {
-    //Resolves who wins
 
     switch(userPlay + compPlay) {
         case "scissorsstone":
@@ -54,36 +62,46 @@ const determineWinner = (userPlay, compPlay) => {
             tie(userPlay);
     }
 
-    document.body.addEventListener("click", clearResults);      //Click to clear results
+        //User can click anywhere to clear results and play again
+    document.body.addEventListener("click", clearResults);
+    
 }
 
+/* Displays result when computer wins.
+ * userPlay - string signaling user's choice
+ * compPlay - string signaling computer's choice */
 const computerWins = (userPlay, compPlay) => {
-    //Resolves what happens if computer wins
 
     document.getElementById("chose" + compPlay).innerHTML = "Computer Wins!";
     document.getElementById("chose" + userPlay).innerHTML = "You Lose!";
     document.getElementById(compPlay).classList.add(compPlay + "win");
     document.getElementById(userPlay).classList.add(userPlay + "lose");
+
 };
 
+/* Displays result when user wins.
+ * userPlay - string signaling user's choice
+ * compPlay - string signaling computer's choice */
 const userWins = (userPlay, compPlay) => {
-    //Resolves what happens if user wins
 
     document.getElementById("chose" + userPlay).innerHTML = "You Win!";
     document.getElementById("chose" + compPlay).innerHTML = "Computer Loses!";
     document.getElementById(userPlay).classList.add(userPlay + "win");
     document.getElementById(compPlay).classList.add(compPlay + "lose");
+
 };
 
+/* Displays result when there is a tie.
+ * play - string signaling user's and computer's choice */
 const tie = play => {
-    //Resolves what happens if there is a tie
 
     document.getElementById("chose" + play).innerHTML = "Tie";
     document.getElementById(play).classList.add(play + "tie");
+
 }
 
+/* Resets the game */
 const clearResults = () => {
-    //Resets the game
 
     document.getElementById("chosestone").innerHTML    = "";
     document.getElementById("chosepaper").innerHTML    = "";
@@ -94,4 +112,5 @@ const clearResults = () => {
     document.getElementById("scissors").className = "scissors";    
 
     played = false;
+
 }
