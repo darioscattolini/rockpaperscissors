@@ -34,7 +34,7 @@ This is the link to the deployed version: [https://darioscattolini.github.io/roc
 I found the idea for this project in [The Odin Project](https://www.theodinproject.com)'s wonderful curriculum. Here's a link to the assignment: [https://www.theodinproject.com/courses/web-development-101/lessons/rock-paper-scissors](https://www.theodinproject.com/courses/web-development-101/lessons/rock-paper-scissors)
 
 ## Contact
-Created by [Darío Scattolini](https://github.com/darioscattolini). Feel free to contact me!
+Created by [Darío Scattolini](https://darioscattolini.github.io). Feel free to contact me!
 
 ## License
 [Copyright 2019 Darío Scattolini - MIT License](./LICENSE.txt])
