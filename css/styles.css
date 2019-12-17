@@ -1,6 +1,15 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
 body {
   background-color: #b3d4fc;
   font-family: 'Lilita One';
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 h1 {
@@ -92,4 +101,38 @@ h1 {
   width: 33%;
   text-align: center;
   font-size: 3vw;
+}
+
+@media screen and (min-width: 300px) and (max-width: 767px) and (orientation: portrait) {
+  html {
+    transform: rotate(-90deg);
+    transform-origin: left top;
+    width: 100vh;
+    overflow-x: hidden;
+    position: absolute;
+    top: 100%;
+    left: 0;
+  }
+
+  body {
+    height: 100vw;
+  }
+
+  h1 {
+    font-size: 4.5vh;
+    text-align: center;
+    letter-spacing: 0.4vh;
+  }
+  
+  .gameboard, .result {
+    width: 70vh;
+  }
+  
+  .result {
+    height: 3vh;
+  }
+
+  #chosestone, #chosepaper, #chosescissors {
+    font-size: 3vh;
+  }
 }
