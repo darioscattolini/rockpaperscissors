@@ -103,6 +103,29 @@ h1 {
   font-size: 3vw;
 }
 
+footer {
+  width: 80%;
+  position: absolute;
+  bottom: 2%;
+  padding: 0 1em;
+  display: flex;
+  justify-content: space-around;
+  align-items: baseline;
+  flex-wrap: wrap;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 600;
+}
+
+footer span {
+  margin: 0 1em;
+}
+
+footer i {
+  color: black;
+  font-size: 2em;
+  margin-left: 0.5em;
+}
+
 @media screen and (min-device-width: 300px) and (max-device-width: 767px) and (orientation: portrait) {
   html {
     transform: rotate(-90deg);
@@ -135,4 +158,20 @@ h1 {
   #chosestone, #chosepaper, #chosescissors {
     font-size: 3vh;
   }
+
+  footer {
+    padding: 0 0.5em;
+    flex-wrap: wrap;
+    font-size: 0.75em;
+  }
+  
+  footer span {
+    margin: 0 0.5em;
+  }
+  
+  footer i {
+    font-size: 1.5em;
+    margin-left: 0.5em;
+  }
+
 }

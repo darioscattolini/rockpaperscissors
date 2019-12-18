@@ -9,6 +9,7 @@ The mechanics of both the game and the code is simple: the user chooses her play
 In December 2019, by then more familiar with best practices, I improved the code in order to include the project in my portfolio. The main changes where:
 * Added README.md file.
 * Added LICENCE.txt file.
+* Added a footer.
 * Added more detailed and consistent comments in main.js.
 * Made minor refactoring of JS code.
 * Removed remnants of unnecessary boilerplate for HTML and CSS files added at the beginning of development.
