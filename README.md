@@ -6,15 +6,12 @@ This is the first JavaScript app I developed, in September 2019, when I'd had en
 The mechanics of both the game and the code is simple: the user chooses her play, which triggers a randomly generated computer play; the script then compares both plays and displays the result. The user can click anywhere on the page to clear the game and play again.
 
 ## Latest update
-In December 2019, by then more familiar with best practices, I improved the code in order to include the project in my portfolio. The main changes where:
-* Added README.md file.
-* Added LICENCE.txt file.
-* Added a footer.
-* Added more detailed and consistent comments in main.js.
-* Made minor refactoring of JS code.
-* Removed remnants of unnecessary boilerplate for HTML and CSS files added at the beginning of development.
-* Corrected bugs in fluid layout making the app (almost) fully responsive.
-* Locked layout in landscape mode for mobile devices (a vertical display would had been a better responsive solution, but I wanted to achieve the former effect).
+In October 2020 I made a major refactoring of the code. The main changes were:
+* Preload all images to smooth the transition between them.
+* Adopted a more object-oriented approach.
+* Game result is calculated arithmetically (and not through case by case comparison).
+* Improved the layout with CSS transitions displaying the game result.
+* Added a counter to keep track of game results.
 
 ## Built with
 * HTML
@@ -22,11 +19,8 @@ In December 2019, by then more familiar with best practices, I improved the code
 * JavaScript (ES6)
 
 ## Status
-_finished_
-There are no features to add to the project. 
-I have two related ideas which are not extensions but projects on their own: 
-* developing a multiplayer version, and
-* making use of the UI to test machine learning algorithms a friend of mine is developing.
+_under development_
+I intend to add a multiplayer version.
 
 ## Play
 This is the link to the deployed version: [https://darioscattolini.github.io/rockpaperscissors](https://darioscattolini.github.io/rockpaperscissors)
@@ -38,4 +32,4 @@ I found the idea for this project in [The Odin Project](https://www.theodinproje
 Created by [Darío Scattolini](https://darioscattolini.github.io). Feel free to contact me!
 
 ## License
-[Copyright 2019 Darío Scattolini - MIT License](./LICENSE.txt])
+[Copyright 2019-20 Darío Scattolini - MIT License](./LICENSE.txt])

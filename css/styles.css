@@ -23,11 +23,30 @@ h1 {
   letter-spacing: 0.4vw;
 }
 
-.gameboard {
+.counter, .gameboard {
   width: 70vw;
   margin-left: auto;
   margin-right: auto;
   display: flex;
+}
+
+.counter {
+  justify-content: space-around;
+  align-items: center;
+}
+
+button {
+  font-family: 'Lilita One';
+  font-size: 18px;
+  padding: 5px 15px;
+  box-shadow: slategrey 2px 2px 2px;
+}
+
+button:active {
+  box-shadow: slategrey 1px 1px 1px;;
+}
+
+.gameboard {
   justify-content: center;
   position: relative;
 }
@@ -106,7 +125,7 @@ footer i {
     letter-spacing: 0.4vh;
   }
   
-  .gameboard {
+  .gameboard, .counter {
     width: 70vh;
   }
   

@@ -5,7 +5,6 @@ class BoardManager {
     this.images = this.buildImgElements();
     this.setUpLayers();
     this.load();
-    this.setUpClickEvent();
   }
 
   buildImgElements() {
@@ -39,16 +38,6 @@ class BoardManager {
     for (const type of this.types) {
       for (const event of this.events) {
         this.images[type].container.appendChild(this.images[type][event]);
-      }
-    }
-  }
-
-  setUpClickEvent() {
-    for (const choice of ["stone", "paper", "scissors"]) {
-      this.images[choice].hover.onclick = event => {
-        event.stopPropagation();
-        const result = play(choice);
-        this.displayResult(result);
       }
     }
   }
@@ -95,7 +84,7 @@ class BoardManager {
     document.body.onclick = () => {
       this.restartLayers();
       document.body.onclick = undefined;
-      this.setUpClickEvent();
+      gameManager.setUpClickEvent();
     };
   }
 
@@ -106,33 +95,83 @@ class BoardManager {
       this.images[type].tie.style.zIndex = 0;
     }
   }
+
+  displayCounter(counter) {
+    for (const outcome of ["victories", "defeats", "ties"]) {
+      const display = document.getElementById(outcome);
+      display.innerText = counter[outcome];
+    }
+  }
 }
 
-function play(userChoice) {
-  const choices = ["stone", "paper", "scissors"];
-  const results = ['tie', 'win', 'lose'];
-
-  userChoice = choices.indexOf(userChoice);
-  const computerChoice = Math.floor(Math.random() * 3);
-  const numberResult = (3 + userChoice - computerChoice) % 3;
-  const result = results[numberResult];
-
-  const outcome = { result };
-
-  switch (result) {
-    case "win":
-      outcome.winningChoice = choices[userChoice];
-      outcome.losingChoice = choices[computerChoice];
-      break;
-    case "lose":
-      outcome.winningChoice = choices[computerChoice];
-      outcome.losingChoice = choices[userChoice];
-      break;
-    case "tie":
-      outcome.tieChoice = choices[userChoice];
+class Game {
+  constructor() {
+    this.victories = 0;
+    this.defeats = 0;
+    this.ties = 0;
   }
 
-  return outcome;
+  play(userChoice) {
+    const choices = ["stone", "paper", "scissors"];
+    const results = ['tie', 'win', 'lose'];
+  
+    userChoice = choices.indexOf(userChoice);
+    const computerChoice = Math.floor(Math.random() * 3);
+    const numberResult = (3 + userChoice - computerChoice) % 3;
+    const result = results[numberResult];
+  
+    const outcome = { result };
+  
+    switch (result) {
+      case "win":
+        outcome.winningChoice = choices[userChoice];
+        outcome.losingChoice = choices[computerChoice];
+        this.victories++;
+        break;
+      case "lose":
+        outcome.winningChoice = choices[computerChoice];
+        outcome.losingChoice = choices[userChoice];
+        this.defeats++;
+        break;
+      case "tie":
+        outcome.tieChoice = choices[userChoice];
+        this.ties++;
+    }
+  
+    return outcome;
+  }
+
+  getCounter() {
+    return {
+      victories: this.victories,
+      defeats: this.defeats,
+      ties: this.ties
+    };
+  }
 }
 
-const boardManager = new BoardManager();
+const gameManager = {
+  boardManager: new BoardManager(),
+  currentGame: new Game(),
+  setUpClickEvent: function() {
+    for (const choice of ["stone", "paper", "scissors"]) {
+      this.boardManager.images[choice].hover.onclick = event => {
+        event.stopPropagation();
+
+        const result = this.currentGame.play(choice);
+        this.boardManager.displayResult(result);
+
+        const counter = this.currentGame.getCounter();
+        this.boardManager.displayCounter(counter);
+      }
+    }
+  },
+  restartGame: function() {
+    this.currentGame = new Game();
+    this.setUpClickEvent();
+    this.boardManager.displayCounter(this.currentGame.getCounter());
+  }
+}
+
+gameManager.setUpClickEvent();
+document.getElementById("reset").onclick = () => { gameManager.restartGame() };
