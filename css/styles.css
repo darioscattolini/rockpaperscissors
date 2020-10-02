@@ -7,14 +7,14 @@ body {
   background-color: #b3d4fc;
   font-family: 'Lilita One';
   height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
 }
 
 .wrapper {
-  margin-top: 8vh;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
 h1 {
@@ -23,89 +23,44 @@ h1 {
   letter-spacing: 0.4vw;
 }
 
-.gameboard, .result {
+.gameboard {
   width: 70vw;
-  margin: auto;
+  margin-left: auto;
+  margin-right: auto;
   display: flex;
+  justify-content: center;
+  position: relative;
 }
 
-.result {
-  height: 3vw;
+#result {
+  position: absolute;
+  align-self: center;
+  z-index: 40;
+  width: 80%;
+  padding-left: 40px;
+  padding-right: 40px;
+  border-radius: 4px;
+  background-color: #b3d4fcf1;
+  text-align: center;
+  font-size: 0px;
+  -webkit-text-stroke: 4px black;
+  transition-property: font-size;
+  transition-duration: 500ms;
+  transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
-.stone, .paper, .scissors {
+#stone, #paper, #scissors {
   width: 33%;
   height: 0;
   padding-bottom: 33%;
+  position: relative;
+  display: flex;
+  justify-content: center;
 }
 
-.stone {
-  background: url("../img/stone.png") no-repeat;
-  background-size: cover;
-}
-.stone:hover {
-  background: url("../img/stoneonhover.png") no-repeat;
-  background-size: cover;
-}
-.stonewin, .stonewin:hover {
-  background: url("../img/stonewin.png") no-repeat;
-  background-size: cover;
-}
-.stonelose, .stonelose:hover {
-  background: url("../img/stonelose.png") no-repeat;
-  background-size: cover;
-}
-.stonetie, .stonetie:hover {
-  background: url("../img/stonetie.png") no-repeat;
-  background-size: cover;
-}
-
-.paper {
-  background: url("../img/paper.png") no-repeat;
-  background-size: cover;
-}
-.paper:hover {
-  background: url("../img/paperonhover.png") no-repeat;
-  background-size: cover;
-}
-.paperwin, .paperwin:hover {
-  background: url("../img/paperwin.png") no-repeat;
-  background-size: cover;
-}
-.paperlose, .paperlose:hover {
-  background: url("../img/paperlose.png") no-repeat;
-  background-size: cover;
-}
-.papertie, .papertie:hover {
-  background: url("../img/papertie.png") no-repeat;
-  background-size: cover;
-}
-
-.scissors {
-  background: url("../img/scissors.png") no-repeat;
-  background-size: cover;
-}
-.scissors:hover {
-  background: url("../img/scissorsonhover.png") no-repeat;
-  background-size: cover;
-}
-.scissorswin, .scissorswin:hover {
-  background: url("../img/scissorswin.png") no-repeat;
-  background-size: cover;
-}
-.scissorslose, .scissorslose:hover {
-  background: url("../img/scissorslose.png") no-repeat;
-  background-size: cover;
-}
-.scissorstie, .scissorstie:hover {
-  background: url("../img/scissorstie.png") no-repeat;
-  background-size: cover;
-}
-
-#chosestone, #chosepaper, #chosescissors {
-  width: 33%;
-  text-align: center;
-  font-size: 3vw;
+#stone img, #paper img, #scissors img {
+  position: absolute;
+  max-width: 100%;
 }
 
 footer {
@@ -145,28 +100,16 @@ footer i {
     height: 100vw;
   }
 
-  .wrapper {
-    margin-top: 8vw;
-  }
-
   h1 {
     font-size: 4.5vh;
     text-align: center;
     letter-spacing: 0.4vh;
   }
   
-  .gameboard, .result {
+  .gameboard {
     width: 70vh;
   }
   
-  .result {
-    height: 3vh;
-  }
-
-  #chosestone, #chosepaper, #chosescissors {
-    font-size: 3vh;
-  }
-
   footer {
     margin-bottom: 4vw;
     padding: 0 0.5em;
@@ -182,5 +125,4 @@ footer i {
     font-size: 1.5em;
     margin-left: 0.5em;
   }
-
 }

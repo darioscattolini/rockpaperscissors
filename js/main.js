@@ -1,116 +1,138 @@
-/* Flag that signals if there is a game result displayed. */
-let played = false;
+class BoardManager {
+  constructor () {
+    this.types = ["stone", "paper", "scissors"];
+    this.events = ["start", "hover", "win", "lose", "tie"];
+    this.images = this.buildImgElements();
+    this.setUpLayers();
+    this.load();
+    this.setUpClickEvent();
+  }
 
-/* Assignment of functions to clickable interface. */
-document.getElementById("stone").onclick    = () => play("stone", event);
-document.getElementById("paper").onclick    = () => play("paper", event);
-document.getElementById("scissors").onclick = () => play("scissors", event);
+  buildImgElements() {
+    const images = {};
+    for (const type of this.types) {
+      images[type] = {};
+      images[type].container = document.getElementById(type);
+      for (const event of this.events) {
+        const url = `../img/${type}-${event}.png`;
+        const image = new Image();
+        image.src = url;
+        images[type][event] = image;
+      }
+    }
+    return images;
+  }
 
-/* Manages a whole game.
- * userPlay - string signaling user's choice
- * event    - user's click event passed as argument for event handling */
-const play = (userPlay, event) => {
+  setUpLayers() {
+    for (const type of this.types) {
+      this.images[type].start.style.zIndex = 10;
+      this.images[type].start.onmouseover = () => {
+        this.images[type].hover.style.zIndex = 20;
+      }
+      this.images[type].hover.onmouseout = () => {
+        this.images[type].hover.style.zIndex = 0;
+      }
+    }
+  }
 
-        //Stops event from bubbling to body event handler (line 66)
-    event.stopPropagation();    
+  load() {
+    for (const type of this.types) {
+      for (const event of this.events) {
+        this.images[type].container.appendChild(this.images[type][event]);
+      }
+    }
+  }
 
-        //In case a previous game needs to be cleared
-    if (played === true) {      
-        clearResults();
-        return;
+  setUpClickEvent() {
+    for (const choice of ["stone", "paper", "scissors"]) {
+      this.images[choice].hover.onclick = event => {
+        event.stopPropagation();
+        const result = play(choice);
+        this.displayResult(result);
+      }
+    }
+  }
+
+  displayResult(gameResult) {
+    switch(gameResult.result) {
+      case 'win':
+      case 'lose':
+        this.images[gameResult.winningChoice].win.style.zIndex = 20;
+        this.images[gameResult.losingChoice].lose.style.zIndex = 20;
+        break;
+      case 'tie':
+        this.images[gameResult.tieChoice].tie.style.zIndex = 20;
     }
 
-    determineWinner(userPlay, computerPlay());
+    this.displayText(gameResult.result);
 
-    played = true;
+    this.disableGame();
+  }
 
-};
+  displayText(result) {
+    const options = {
+      win:  { text: 'You win!', color: '#66f1ab' },
+      lose: { text: 'You lose!', color: '#f89567' },
+      tie:  { text: 'Tie!', color: '#727272' }
+    };
 
-/* Resolves computer's choice.
- * returns string signalling computer's choice. */
-const computerPlay = () => {
+    const text = document.getElementById('result');
+    text.innerText = options[result].text;
+    text.style.color = options[result].color;
+    text.style.visibility = 'visible';
+    text.style.fontSize = '100px';
+    setTimeout(() => {
+      document.getElementById('result').style.visibility = 'hidden';
+      document.getElementById('result').style.fontSize = '0';
+    }, 500);
+  }
 
-    let play = Math.floor(Math.random() * 3);
-    switch(play) {
-        case 0:
-            return "stone";
-        case 1:
-            return "paper";
-        case 2:
-            return "scissors";
+  disableGame() {
+    for (const type of this.types) {
+      this.images[type].hover.onclick = undefined;
     }
 
-}
+    document.body.onclick = () => {
+      this.restartLayers();
+      document.body.onclick = undefined;
+      this.setUpClickEvent();
+    };
+  }
 
-/* Resolves who wins and triggers function to display result.
- * userPlay - string signaling user's choice
- * compPlay - string signaling computer's choice */
-const determineWinner = (userPlay, compPlay) => {
-
-    switch(userPlay + compPlay) {
-        case "scissorsstone":
-        case "paperscissors":
-        case "stonepaper":
-            computerWins(userPlay, compPlay);
-            break;
-        case "stonescissors":
-        case "scissorspaper":
-        case "paperstone":
-            userWins(userPlay, compPlay);
-            break;
-        default:
-            tie(userPlay);
+  restartLayers() {
+    for (const type of this.types) {
+      this.images[type].win.style.zIndex = 0;
+      this.images[type].lose.style.zIndex = 0;
+      this.images[type].tie.style.zIndex = 0;
     }
-
-        //User can click anywhere to clear results and play again
-    document.body.addEventListener("click", clearResults);
-    
+  }
 }
 
-/* Displays result when computer wins.
- * userPlay - string signaling user's choice
- * compPlay - string signaling computer's choice */
-const computerWins = (userPlay, compPlay) => {
+function play(userChoice) {
+  const choices = ["stone", "paper", "scissors"];
+  const results = ['tie', 'win', 'lose'];
 
-    document.getElementById("chose" + compPlay).innerHTML = "Computer Wins!";
-    document.getElementById("chose" + userPlay).innerHTML = "You Lose!";
-    document.getElementById(compPlay).classList.add(compPlay + "win");
-    document.getElementById(userPlay).classList.add(userPlay + "lose");
+  userChoice = choices.indexOf(userChoice);
+  const computerChoice = Math.floor(Math.random() * 3);
+  const numberResult = (3 + userChoice - computerChoice) % 3;
+  const result = results[numberResult];
 
-};
+  const outcome = { result };
 
-/* Displays result when user wins.
- * userPlay - string signaling user's choice
- * compPlay - string signaling computer's choice */
-const userWins = (userPlay, compPlay) => {
+  switch (result) {
+    case "win":
+      outcome.winningChoice = choices[userChoice];
+      outcome.losingChoice = choices[computerChoice];
+      break;
+    case "lose":
+      outcome.winningChoice = choices[computerChoice];
+      outcome.losingChoice = choices[userChoice];
+      break;
+    case "tie":
+      outcome.tieChoice = choices[userChoice];
+  }
 
-    document.getElementById("chose" + userPlay).innerHTML = "You Win!";
-    document.getElementById("chose" + compPlay).innerHTML = "Computer Loses!";
-    document.getElementById(userPlay).classList.add(userPlay + "win");
-    document.getElementById(compPlay).classList.add(compPlay + "lose");
-
-};
-
-/* Displays result when there is a tie.
- * play - string signaling user's and computer's choice */
-const tie = play => {
-
-    document.getElementById("chose" + play).innerHTML = "Tie";
-    document.getElementById(play).classList.add(play + "tie");
-
+  return outcome;
 }
 
-/* Resets the game */
-const clearResults = () => {
-
-    document.getElementById("chosestone").innerHTML    = "";
-    document.getElementById("chosepaper").innerHTML    = "";
-    document.getElementById("chosescissors").innerHTML = "";
-    
-    document.getElementById("stone").className    = "stone";
-    document.getElementById("paper").className    = "paper";
-    document.getElementById("scissors").className = "scissors";    
-
-    played = false;
-
-}
+const boardManager = new BoardManager();
