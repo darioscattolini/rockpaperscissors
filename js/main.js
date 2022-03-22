@@ -13,7 +13,7 @@ class BoardManager {
       images[type] = {};
       images[type].container = document.getElementById(type);
       for (const event of this.events) {
-        const url = `../img/${type}-${event}.png`;
+        const url = `./img/${type}-${event}.png`;
         const image = new Image();
         image.src = url;
         images[type][event] = image;
